@@ -43,15 +43,116 @@
   width: 100vw;
   box-shadow: 0px 0px 4px grey;
   border-radius: 0.5rem;
-}
-.react-flow{
-  background: radial-gradient(
-        grey 1px,
-        #D3D2E4 1px,
-        
-      );
-  background-size: 15px 15px;
-  .react-flow__nodes .react-flow__node{
-    border-radius: 50%;
+  .react-flow{
+    background: radial-gradient(
+          grey 1px,
+          #D3D2E4 1px,
+          
+        );
+    background-size: 15px 15px;
+    .react-flow__nodes .react-flow__node{
+      border-radius: 50%;
+    }
+  }
+  &.delete-mode {
+    .react-flow{
+      background: radial-gradient(
+            grey 1px,
+            #d09191 1px,
+            
+          );
+      background-size: 15px 15px;
+      .react-flow__nodes .react-flow__node{
+        border-radius: 50%;
+      }
+    }
   }
 }
+
+
+.customNodeBody {
+  width: 50px;
+  height: 50px;
+  border: 3px solid black;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.customNode {
+  .delete {
+    position: absolute;
+    top: 100%;
+    left: 32%;
+    transform: translate(0, -50%);
+    width: 20px;
+    height: 20px;
+    background: #d6d5e6;
+    border-radius: 10px;
+    border: 1px solid black
+  }
+}
+.customNode:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  height: 10px;
+  width: 20px;
+  transform: translate(-50%, 0);
+  background: #d6d5e6;
+  z-index: 1000;
+  line-height: 1;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 9px;
+  border: 2px solid #222138;
+}
+
+div.sourceHandle {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  transform: none;
+  border: none;
+  opacity: 0;
+}
+
+div.targetHandle {
+  width: 100%;
+  height: 100%;
+  background: blue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  transform: none;
+  border: none;
+  opacity: 0;
+}
+
+.flow-parent {
+  position: relative;
+  .btn-add {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+  }
+  .btn-del {
+    position: absolute;
+      top: 3rem;
+      left: 1rem;
+  }
+  .btn-del-all {
+    position: absolute;
+      top: 5rem;
+      left: 1rem;
+  }
+}
+

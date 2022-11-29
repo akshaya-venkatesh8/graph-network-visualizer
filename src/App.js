@@ -1,14 +1,15 @@
 
 import { ReactFlowProvider } from 'react-flow-renderer';
 import './App.scss';
-import TestComponent from './components/test-component/TestComponent/TestComponent';
+import EasyConnect from './components/easy-connect/EasyConnect';
+
 
 function App() {
   return (
     <div className="App">
       
         <ReactFlowProvider>
-          <TestComponent />
+          <EasyConnect />
       </ReactFlowProvider>
       
     </div>
