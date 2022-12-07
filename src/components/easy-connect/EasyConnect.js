@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import ReactFlow,  { addEdge, useNodesState, useStore, useEdgesState } from 'reactflow';
+import ReactFlow,  { addEdge, useNodesState, useStore, useEdgesState, MarkerType } from 'reactflow';
 
 import CustomNode from '../CustomNode/CustomNode';
 import FloatingEdge from '../FloatingEdge/FloatingEdge';
@@ -8,17 +8,25 @@ import CustomConnectionLine from '../CustomConnectionLine/CustomConnectionLine';
 
 import 'reactflow/dist/style.css';
 import { useReactFlow } from 'react-flow-renderer';
+import { useMemo } from 'react';
 
 const nodesLengthSelector = (state) => Array.from(state.nodeInternals.values()).length || 0;
-const setSelectedElements = state => state.setSelectedElements;
-const unsetUserSelection = (state => state.unsetUserSelection);
+const edgesLengthSelector = (state) => state.edges.length || 0;
+// const setSelectedElements = state => state.setSelectedElements;
+// const unsetUserSelection = (state => state.unsetUserSelection);
 
 const NodesLengthLogger = () => {
     const nodesLength = useStore(nodesLengthSelector);
-  
+    const edgesLength = useStore(edgesLengthSelector);
+    
     useEffect(() => {
       console.log('nodes length changed:', nodesLength);
+     
     }, [nodesLength]);
+    useEffect(() => {
+      console.log('edges length changed:', edgesLength);
+     
+    }, [edgesLength]);
   
     return null;
   };
@@ -52,9 +60,9 @@ const connectionLineStyle = {
   stroke: 'black',
 };
 
-const nodeTypes = {
-  custom: CustomNode,
-};
+// const nodeTypes = {
+//   custom: CustomNode,
+// };
 
 const edgeTypes = {
   floating: FloatingEdge,
@@ -63,15 +71,32 @@ const edgeTypes = {
 const defaultEdgeOptions = {
   style: { strokeWidth: 3, stroke: 'black' },
   type: 'floating',
+  // markerEnd: {
+  //   type: MarkerType.ArrowClosed, //make it directed.
+  //   color: 'black',
+  // },
   
 };
 let nodeId = 4;
+
+
 const EasyConnect = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [deleteMode, setDeleteMode] = useState(false);
   const reactFlowInstance = useReactFlow(); 
-  
+  const nodeTypes = useMemo(
+    () => ({
+      custom: CustomNode,
+    }),
+    []
+  );
+  const edgeTypes = useMemo(
+    () => ({
+      floating: FloatingEdge,
+    }),
+    []
+  );
   const addNode = useCallback(() => {
     const id = `${++nodeId}`;
     const newNode = {
@@ -98,11 +123,10 @@ const EasyConnect = () => {
 
  
   const onChange = (params) => {
-    console.log(params.nodes);
+    console.log("on change called");
     if(deleteMode) {
         if(params.nodes.length > 0){
             const delId = params?.nodes[0]?.id;
-            console.log(nodes);
             const updatedNodes = nodes.filter((node) =>  node.id !== delId)
             setNodes(updatedNodes)
             reactFlowInstance.setNodes(updatedNodes);
@@ -112,14 +136,30 @@ const EasyConnect = () => {
             const updatedEdges = edges.filter((edge) => edge.id !== delId)
             setEdges(updatedEdges)
             reactFlowInstance.setEdges(updatedEdges);
-        }
-        
-
-        
-
+        } 
     }
   }
   
+  const nodeClickHandler = (event, node) => {
+    if(deleteMode) {
+      if(node && nodes.length > 0){
+          const delId = node.id;
+          const updatedNodes = nodes.filter((n) =>  n.id !== delId)
+          setNodes(updatedNodes)
+          reactFlowInstance.setNodes(updatedNodes);
+      }
+  }
+  }
+  const edgeClickHandler = (event, edge) => {
+    if(deleteMode) {
+      if(edge && edges.length > 0){
+        const delId = edge.id;
+        const updatedEdges = edges.filter((e) => e.id !== delId)
+        setEdges(updatedEdges)
+        reactFlowInstance.setEdges(updatedEdges);
+    } 
+  }
+  }
   const deleteModeToggle = () => {
     setDeleteMode(!deleteMode);
     
@@ -130,6 +170,8 @@ const EasyConnect = () => {
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      onNodeClick={nodeClickHandler}
+      onEdgeClick={edgeClickHandler}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
@@ -139,8 +181,7 @@ const EasyConnect = () => {
       defaultEdgeOptions={defaultEdgeOptions}
       connectionLineComponent={CustomConnectionLine}
       connectionLineStyle={connectionLineStyle}
-      onSelectionChange={onChange}
-      
+      // onSelectionChange={onChange}
     >
         <NodesLengthLogger />
         </ReactFlow>
