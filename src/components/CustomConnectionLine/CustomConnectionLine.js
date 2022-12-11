@@ -8,10 +8,10 @@ function CustomConnectionLine(props) {
     targetX: props.toX,
     targetY: props.toY,
   });
-  // console.log(props);
+  
   return (
     <g>
-      <path style={props.onnectionLineStyle} fill="none" d={edgePath} />
+      <path style={props.connectionLineStyle} fill="none" d={edgePath} />
       <circle cx={props.toX} cy={props.toY} fill="black" r={3} stroke="black" strokeWidth={1.5} />
     </g>
   );

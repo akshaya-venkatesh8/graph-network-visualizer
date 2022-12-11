@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .App {
   text-align: center;
 }
@@ -12,32 +17,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
 .flow-parent {
   height: 100vh;
   width: 100vw;
@@ -95,7 +74,8 @@
     border: 1px solid black
   }
 }
-.customNode:before {
+.customNode{
+  &:before {
   content: '';
   position: absolute;
   top: -5px;
@@ -103,38 +83,52 @@
   height: 10px;
   width: 20px;
   transform: translate(-50%, 0);
-  background: #d6d5e6;
+  background: #333333;
   z-index: 1000;
   line-height: 1;
   border-radius: 4px;
-  color: #fff;
   font-size: 9px;
-  border: 2px solid #222138;
+  border: 2px solid;
+  border-color: inherit;
+  color: #D3D2E4;
 }
-
-div.sourceHandle {
-  width: 100%;
+  &.x:before{
+    content: 'x';
+    text-align: center;
+    cursor: pointer;
+  }
+}
+div.source-handle {
+  width: 50%;
   height: 100%;
   position: absolute;
-  top: 0;
+  top: 3px;
   left: 0;
   border-radius: 0;
   transform: none;
   border: none;
   opacity: 0;
+  &.source-active:hover{
+    opacity: 1;
+    background-color: #44444450;
+  }
 }
 
-div.targetHandle {
-  width: 100%;
+div.target-handle {
+  width: 50%;
   height: 100%;
   background: blue;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 3px;
+  // right: 0;
   border-radius: 0;
   transform: none;
   border: none;
   opacity: 0;
+  &.target-active {
+    opacity: 1;
+    background-color: #ee000050;
+  }
 }
 
 .flow-parent {
@@ -156,3 +150,31 @@ div.targetHandle {
   }
 }
 
+div.react-flow__panel {
+  display: none;
+}
+
+.shadow {
+  -webkit-box-shadow: inset 0px 0px 10px rgb(100, 100, 100)  !important;
+   -moz-box-shadow: inset 0px 0px 10px rgb(100, 100, 100)  !important;
+        box-shadow: inset 0px 0px 10px rgb(100, 100, 100) !important;
+}
+
+// .animation {
+//   background: linear-gradient(270deg, #24a382, #2934d0, #7d1f50, #d2361d);
+//   background-size: 800% 800%;
+
+//   -webkit-animation: background-flash 3s ease;
+//   animation: background-flash 3s ease;
+// }
+
+// @-webkit-keyframes background-flash {
+//   0%{background-position:0% 50%}
+//   50%{background-position:100% 50%}
+//   100%{background-position:0% 50%}
+// }
+// @keyframes background-flash {
+//   0%{background-position:0% 50%}
+//   50%{background-position:100% 50%}
+//   100%{background-position:0% 50%}
+// }
