@@ -1,7 +1,7 @@
 import * as React from "react";
 import Draggable from "react-draggable";
 import { Box, useTheme } from "@mui/material";
-import { useEdges, useStore } from "reactflow";
+import { useStore } from "reactflow";
 import useModeStore from "../../services/ModeStore";
 import InfoDialog from "../InfoDialog/InfoDialog";
 
@@ -38,47 +38,55 @@ export default function GraphInfo({
   };
   
   const handleClickOpen = () => {
+    console.log("OPENING");
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const onClose = () => {
+    console.log("test", open);
     setOpen(false);
   };
   
   return (
+    <>
     <Draggable>
+      
       <Box sx={containerStyles} onClick={handleClickOpen}>
-        <div style={textStyle} className="node-length">
-          {" "}
+        <div title="Total number of nodes" style={textStyle} className="info-item" >
           n: {nodesLength}
         </div>
-        <div style={textStyle} className="edge-length">
-          {" "}
+        <div title="Total number of edges" style={textStyle} className="info-item">
           m: {edgesLength}
         </div>
         {!directedMode && (
-          <div style={textStyle} className="edge-length">
+          <div title="Max degree" style={textStyle} className="info-item">
             {" "}
             k: {Math.max(...degrees)}
           </div>
         )}
         {directedMode && (
           <>
-            <div style={textStyle} className="edge-length">
+            <div title="Total number of nodes" style={textStyle} className="info-item">
               {" "}
               in deg: {Math.max(...inDegrees)}
             </div>
-            <div style={textStyle} className="edge-length">
+            <div style={textStyle} className="info-item">
               {" "}
               out deg: {Math.max(...outDegrees)}
             </div>
           </>
         )}
-      <InfoDialog
-        open={open}
-        onClose={handleClose}
-      />
+      
       </Box>
+      
     </Draggable>
+    <InfoDialog
+        degrees={degrees}
+        inDegrees={inDegrees}
+        outDegrees={outDegrees}
+        open={open}
+        onClose={onClose}
+      />
+    </>
   );
 }

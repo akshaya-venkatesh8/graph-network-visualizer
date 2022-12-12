@@ -17,27 +17,31 @@ import { ColorModeContext } from '../../App';
 import GraphInfo from '../GraphInfo/GraphInfo';
 import useModeStore from '../../services/ModeStore';
 import DownloadImage from '../DownloadImage/DownloadImage';
-
+import './MainComponent.scss'
 const initialNodes = [
   {
     id: '1',
     type: 'custom',
     position: { x: 50, y: 0 },
+    data: null
   },
   {
     id: '2',
     type: 'custom',
     position: { x: 150, y: 150 },
+    data: null
   },
   {
     id: '3',
     type: 'custom',
     position: { x: 50, y: 150 },
+    data: null
   },
   {
     id: '4',
     type: 'custom',
     position: { x: 150, y: 0 },
+    data: null
   },
 ];
 
@@ -309,6 +313,7 @@ const MainComponent = () => {
      <IconButton sx={{ ml: 1, position: 'absolute', top: '2rem', right: '2rem' }} onClick={colorModeContext.toggleColorMode} color={theme.palette.background.dots}>
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
+      <div style={{backgroundColor: theme.palette.background.default}} className="app-title">Graph theorist's sketch pad</div>
      </>
   );
  

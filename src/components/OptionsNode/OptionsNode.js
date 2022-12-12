@@ -2,25 +2,34 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Draggable from "react-draggable";
 import "./OptionsNode.scss";
-import { Box, useTheme } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  useTheme,
+} from "@mui/material";
 import useModeStore from "../../services/ModeStore";
+import { useState } from "react";
 
 export default function OptionsNode(props) {
   const theme = useTheme();
-  
-  const toggleDeleteMode = useModeStore((state) => state.toggleDeleteMode)
-  const toggleColorMode = useModeStore((state) => state.toggleColorMode)
-  const toggleDirectedMode = useModeStore((state) => state.toggleDirectedMode)
-  const toggleShowNodeLabels = useModeStore((state) => state.toggleShowNodeLabels)
+
+  const toggleDeleteMode = useModeStore((state) => state.toggleDeleteMode);
+  const toggleColorMode = useModeStore((state) => state.toggleColorMode);
+  const toggleDirectedMode = useModeStore((state) => state.toggleDirectedMode);
+  const toggleShowNodeLabels = useModeStore(
+    (state) => state.toggleShowNodeLabels
+  );
 
   const deleteMode = useModeStore((state) => state.deleteMode);
   const colorMode = useModeStore((state) => state.colorMode);
   const directedMode = useModeStore((state) => state.directedMode);
-  const showNodeLabels = useModeStore((state) => state.showNodeLabels);
 
   const color = useModeStore((state) => state.color);
   const setColor = useModeStore((state) => state.setColor);
 
+  const [showMenu, setShowMenu] = useState(false);
   const containerStyles = {
     border: `1px solid ${theme.palette.text.primary}`,
     backgroundColor: theme.palette.background.dots,
@@ -29,14 +38,40 @@ export default function OptionsNode(props) {
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.default,
   };
-
+  const textStyle = {
+    color: theme.palette.text.primary,
+  };
+  const checkBoxStyle = {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.default,
+    margin: "0.5rem auto",
+    borderRadius: "4px",
+    width: "100%",
+  };
+  const menuHandleStyles = {
+    backgroundColor: theme.palette.background.default,
+  }
   const handleColorChange = (e) => {
     setColor(e.target.value);
   };
+  const getCheckbox = () => (
+    <Checkbox
+      style={textStyle}
+      className="label-checkbox"
+      onChange={toggleShowNodeLabels}
+      size="small"
+      defaultChecked
+    />
+  );
 
   return (
     <Draggable>
-      <Box className="options-container" sx={containerStyles}>
+      <Box className="options-container"  sx={containerStyles}>
+        <div onClick={() => {setShowMenu(!showMenu)}} style={{backgroundColor: theme.palette.background.dots,}} className={`menu-icon ${showMenu ? 'show' : 'hide'} `}>
+          <div style={{backgroundColor: theme.palette.background.default,}}  className={`stroke upper ${showMenu ? 'show' : 'hide'} `}></div>
+          <div style={{backgroundColor: theme.palette.background.default,}}  className={`stroke lower ${showMenu ? 'show' : 'hide'} `}></div>
+        </div>
+        <div className={`buttons-container ${showMenu ? 'show' : 'hide'} `}>
         <Button
           className="btn"
           style={commonButtonStyles}
@@ -47,7 +82,7 @@ export default function OptionsNode(props) {
           Add Node
         </Button>
         <Button
-        className="btn"
+          className="btn"
           style={commonButtonStyles}
           onClick={props.deleteAllNodes}
           variant="contained"
@@ -78,7 +113,7 @@ export default function OptionsNode(props) {
             <input type="color" value={color} onChange={handleColorChange} />
           </div>
         )}
-           <Button
+        <Button
           style={commonButtonStyles}
           onClick={toggleDirectedMode}
           variant="contained"
@@ -87,24 +122,23 @@ export default function OptionsNode(props) {
         >
           Directed Mode
         </Button>
-         <Button
-          style={commonButtonStyles}
-          onClick={toggleShowNodeLabels}
-          variant="contained"
-          size="small"
-          className={showNodeLabels ? "" : "shadow"}
-        >
-          {showNodeLabels ? 'Hide Node Labels' : 'Show Node Labels'}
-        </Button>
-         <Button
+        <FormControlLabel
+          className="form-control-checkbox"
+          style={checkBoxStyle}
+          control={getCheckbox()}
+          label="Node labels"
+        />
+
+        <Button
           className="btn"
           style={commonButtonStyles}
           onClick={props.resetGraph}
           variant="contained"
           size="small"
         >
-         Reset
+          Reset
         </Button>
+        </div>
       </Box>
     </Draggable>
   );

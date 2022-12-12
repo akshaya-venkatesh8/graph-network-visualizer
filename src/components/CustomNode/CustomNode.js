@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { Tooltip } from '@mui/material';
 import { Handle, Position, useStore } from 'reactflow';
 import useModeStore from '../../services/ModeStore';
 
@@ -22,17 +23,20 @@ export default function CustomNode({ id, data }) {
           borderColor: theme.palette.background.dots
         }}
       >
+        
         <Handle
-          className={`source-handle ${!colorMode ? 'source-active': ''}`}
+          className={`source-handle source-active`}
           style={{ zIndex: 2 }}
           position={Position.Top}
           type="source"
+          title='Source'
         />
         <Handle
           className={`target-handle ${isTarget ? 'target-active ' : ''}`}
           style={targetHandleStyle}
           position={Position.Top}
           type="target"
+          title="Target"
         />
         {showNodeLabels ? label : ''}
       </div>

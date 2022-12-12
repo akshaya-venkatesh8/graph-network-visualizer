@@ -1,18 +1,22 @@
 import { useTheme } from "@emotion/react";
-import { Dialog, DialogTitle } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { Dialog, DialogTitle, IconButton } from "@mui/material";
 import React from "react";
 import { useEdges, useStore } from "reactflow";
+import './InfoDialog.scss';
 
 const nodesLengthSelector = (state) =>
   Array.from(state.nodeInternals.values()).length || 0;
 export default function InfoDialog(props) {
-  const { onClose, open } = props;
+  const { onClose, open, degrees, inDegrees, outDegrees } = props;
   const theme = useTheme();
   const nodesLength = useStore(nodesLengthSelector);
   const edges = useEdges();
   const textStyle = {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     margin: "0.25rem auto",
+    textTransform: 'uppercase',
+    fontSize: '13px'
   };
   const getMatrix = () => {
     let adjMatrix = Array(nodesLength)
@@ -29,9 +33,7 @@ export default function InfoDialog(props) {
     });
     return rows;
   };
-  const handleClose = () => {
-    onClose();
-  };
+  
 
   // This function returns true if
   // graph G[V][V] is Bipartite, else false
@@ -89,10 +91,17 @@ export default function InfoDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Graph Information</DialogTitle>
-      <div style={textStyle}>
-        <div>
+    <Dialog className="info-dialog" onClose={onClose} open={open}>
+      <div className="dialog-container">
+      <IconButton className="close-button" onClick={onClose}>
+        <Close />
+      </IconButton>
+      <div className="dialog-title" style={textStyle}>Graph Information</div>
+      <div className="information-wrapper" style={textStyle}>
+        <div className="matrix-wrapper">
+          <div className="matrix-title">Adjacency Matrix</div>
+        <div className="matrix">
+          
           {getMatrix().map((row, i) => (
             <div style={textStyle} key={i}>
               {row.map((col, j) => (
@@ -103,10 +112,12 @@ export default function InfoDialog(props) {
             </div>
           ))}
         </div>
-        <div style={textStyle} className="bipartite">{`${isBipartite(
+        </div>
+        <div style={textStyle} className="bipartite">Is Graph Bipartite? {isBipartite(
           getMatrix(),
           0
-        )}`}</div>
+        ) ? <b>Yes</b> : <b>No</b>}</div>
+      </div>
       </div>
     </Dialog>
   );

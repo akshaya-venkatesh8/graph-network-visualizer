@@ -17,36 +17,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-.flow-parent {
-  height: 100vh;
-  width: 100vw;
-  box-shadow: 0px 0px 4px grey;
-  border-radius: 0.5rem;
-  .react-flow{
-    background: radial-gradient(
-          grey 1px,
-          #D3D2E4 1px,
-          
-        );
-    background-size: 15px 15px;
-    .react-flow__nodes .react-flow__node{
-      border-radius: 50%;
-    }
-  }
-  &.delete-mode {
-    .react-flow{
-      background: radial-gradient(
-            grey 1px,
-            #d09191 1px,
-            
-          );
-      background-size: 15px 15px;
-      .react-flow__nodes .react-flow__node{
-        border-radius: 50%;
-      }
-    }
-  }
-}
+
 
 
 .customNodeBody {
@@ -126,34 +97,17 @@ div.target-handle {
   transform: none;
   border: none;
   opacity: 0;
+  &:hover {
+    opacity: 1;
+    background-color: #3a3a3a50;
+  }
   &.target-active {
     opacity: 1;
-    background-color: #ee000050;
+    background-color: #3a3a3a50;
   }
 }
 
-.flow-parent {
-  position: relative;
-  .btn-add {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-  }
-  .btn-del {
-    position: absolute;
-      top: 3rem;
-      left: 1rem;
-  }
-  .btn-del-all {
-    position: absolute;
-      top: 5rem;
-      left: 1rem;
-  }
-}
 
-div.react-flow__panel {
-  display: none;
-}
 
 .shadow {
   -webkit-box-shadow: inset 0px 0px 10px rgb(100, 100, 100)  !important;

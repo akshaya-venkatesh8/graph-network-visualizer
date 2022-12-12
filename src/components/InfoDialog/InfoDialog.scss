@@ -1,0 +1,34 @@
+.info-dialog{
+    position: relative;
+    .dialog-title{
+        text-transform: 'uppercase';
+        font-size: '13px';
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+   .dialog-container{
+    width: 300px;
+    padding: 1rem;
+    .information-wrapper{
+        // display: flex;
+        .matrix-title{
+            padding: 0.5rem 0;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .matrix {
+            padding: 0 0.5rem;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            display: inline-block;
+            .cell{
+            padding: 0.15rem
+        }}
+    }
+   }
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+}

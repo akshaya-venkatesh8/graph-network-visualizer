@@ -4,7 +4,7 @@
     padding: 1rem;
     position: absolute;
     top: 2rem;
-    left: 2rem;
+    right: 6rem;
     border-radius: 1rem;
     .btn {
         width: 100%;
@@ -12,3 +12,44 @@
       }
 }
 
+.form-control-checkbox {
+  .label-checkbox {
+    padding: 6px;
+  }
+  span.MuiTypography-root{
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+}
+.menu-icon {
+    width: 136px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  .stroke {
+    width: 25px;
+    height: 4px;
+    margin: 0.15rem auto;
+    transition: transform 0.5s;
+    &.upper.show{
+      transform: rotate(-45deg) translate(-4px, 1px)
+    }
+    &.lower.show{
+      transform: rotate(45deg) translate(-5px, -3px);
+    }
+  }
+}
+
+.buttons-container{
+  &.show{
+    display: block;
+  }
+  &.hide{
+    display: none;
+  }
+}
