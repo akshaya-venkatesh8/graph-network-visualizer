@@ -1,5 +1,5 @@
 
-import { createTheme, Experimental_CssVarsProvider as CSSTheme, ThemeProvider} from '@mui/material';
+import { createTheme, Experimental_CssVarsProvider as ThemeProvider} from '@mui/material';
 import React from 'react';
 import { ReactFlowProvider } from 'react-flow-renderer';
 import './App.scss';

@@ -1,7 +1,6 @@
 import { useTheme } from '@emotion/react';
-import { useEffect, useState } from 'react';
 import { Handle, Position, useStore } from 'reactflow';
-import useModeStore from '../../services/store';
+import useModeStore from '../../services/ModeStore';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 export default function CustomNode({ id, data }) {
@@ -9,7 +8,8 @@ export default function CustomNode({ id, data }) {
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const deleteMode = useModeStore((state) => state.deleteMode);
   const colorMode = useModeStore((state) => state.colorMode);
-  const isTarget = !colorMode && connectionNodeId ? true : false;
+  const showNodeLabels = useModeStore((state) => state.showNodeLabels);
+  const isTarget =  connectionNodeId ? true : false;
   const targetHandleStyle = { zIndex: true ? 3 : 1 };
   const label = id;
   return (
@@ -34,7 +34,7 @@ export default function CustomNode({ id, data }) {
           position={Position.Top}
           type="target"
         />
-        {label}
+        {showNodeLabels ? label : ''}
       </div>
       {/* <div className='delete'>x</div> */}
     </div>

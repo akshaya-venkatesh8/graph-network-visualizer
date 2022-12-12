@@ -1,1 +1,14 @@
 
+.options-container {
+    max-width: 170px;
+    padding: 1rem;
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    border-radius: 1rem;
+    .btn {
+        width: 100%;
+        margin: 0.5rem auto;
+      }
+}
+

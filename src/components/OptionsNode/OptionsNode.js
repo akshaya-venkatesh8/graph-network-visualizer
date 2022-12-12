@@ -1,33 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Draggable from "react-draggable";
 import "./OptionsNode.scss";
 import { Box, useTheme } from "@mui/material";
-import { MuiColorInput } from "mui-color-input";
-import useModeStore from "../../services/store";
+import useModeStore from "../../services/ModeStore";
 
 export default function OptionsNode(props) {
   const theme = useTheme();
   
   const toggleDeleteMode = useModeStore((state) => state.toggleDeleteMode)
   const toggleColorMode = useModeStore((state) => state.toggleColorMode)
+  const toggleDirectedMode = useModeStore((state) => state.toggleDirectedMode)
+  const toggleShowNodeLabels = useModeStore((state) => state.toggleShowNodeLabels)
+
   const deleteMode = useModeStore((state) => state.deleteMode);
   const colorMode = useModeStore((state) => state.colorMode);
+  const directedMode = useModeStore((state) => state.directedMode);
+  const showNodeLabels = useModeStore((state) => state.showNodeLabels);
+
   const color = useModeStore((state) => state.color);
   const setColor = useModeStore((state) => state.setColor);
+
   const containerStyles = {
-    maxWidth: "170px",
-    padding: "1rem",
-    position: "absolute",
-    top: "1rem",
-    left: "1rem",
     border: `1px solid ${theme.palette.text.primary}`,
-    borderRadius: "1rem",
     backgroundColor: theme.palette.background.dots,
   };
   const commonButtonStyles = {
-    width: "100%",
-    margin: "0.5rem auto",
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.default,
   };
@@ -38,8 +36,9 @@ export default function OptionsNode(props) {
 
   return (
     <Draggable>
-      <Box sx={containerStyles}>
+      <Box className="options-container" sx={containerStyles}>
         <Button
+          className="btn"
           style={commonButtonStyles}
           onClick={props.addNode}
           variant="contained"
@@ -48,8 +47,9 @@ export default function OptionsNode(props) {
           Add Node
         </Button>
         <Button
+        className="btn"
           style={commonButtonStyles}
-          onClick={props.deleteNodes}
+          onClick={props.deleteAllNodes}
           variant="contained"
           size="small"
         >
@@ -60,7 +60,7 @@ export default function OptionsNode(props) {
           onClick={toggleDeleteMode}
           variant="contained"
           size="small"
-          className={deleteMode ? "shadow" : ""}
+          className={deleteMode ? "btn shadow" : "btn"}
         >
           Delete Mode
         </Button>
@@ -69,7 +69,7 @@ export default function OptionsNode(props) {
           onClick={toggleColorMode}
           variant="contained"
           size="small"
-          className={colorMode ? "shadow" : ""}
+          className={colorMode ? " btn shadow" : "btn"}
         >
           Color Mode
         </Button>
@@ -78,6 +78,33 @@ export default function OptionsNode(props) {
             <input type="color" value={color} onChange={handleColorChange} />
           </div>
         )}
+           <Button
+          style={commonButtonStyles}
+          onClick={toggleDirectedMode}
+          variant="contained"
+          size="small"
+          className={directedMode ? " btn shadow" : "btn"}
+        >
+          Directed Mode
+        </Button>
+         <Button
+          style={commonButtonStyles}
+          onClick={toggleShowNodeLabels}
+          variant="contained"
+          size="small"
+          className={showNodeLabels ? "" : "shadow"}
+        >
+          {showNodeLabels ? 'Hide Node Labels' : 'Show Node Labels'}
+        </Button>
+         <Button
+          className="btn"
+          style={commonButtonStyles}
+          onClick={props.resetGraph}
+          variant="contained"
+          size="small"
+        >
+         Reset
+        </Button>
       </Box>
     </Draggable>
   );
